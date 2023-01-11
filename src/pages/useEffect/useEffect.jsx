@@ -1,11 +1,20 @@
-import React from 'react'
-import NavBar from '../../components/navBar/navBar'
+import React, { useState } from 'react'
+import MyEffect from '../../components/myEffect/myEffect'
+
+
 
 export default function UseEffect() {
+    const [state, setState] = useState(true)
+    const toggleState = () => {
+        setState(!state)
+    }
+
     return (
         <div>
-            <NavBar />
-            <h1>useEffect</h1>
+            {state
+                ? <MyEffect props={toggleState}></MyEffect>
+                : <p>ComponentDidUnmount</p>
+            }
 
         </div>
     )
