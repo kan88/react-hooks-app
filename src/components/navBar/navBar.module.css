@@ -1,0 +1,13 @@
+.nav__list {
+    list-style-type: none;
+}
+
+.nav__item {
+    color: black;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.nav__item:hover {
+    color: brown;
+}

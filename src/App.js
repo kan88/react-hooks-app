@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import Index from './pages/index';
+import UseEffect from './pages/useEffect/useEffect';
+import UseMemo from './pages/useMemo/useMemo';
+import UseState from './pages/useState/useState';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Index/>,
+  },
+  {
+    path: "/useeffect",
+    element: <UseEffect/>,
+  },
+  {
+    path: "/usememo",
+    element: <UseMemo/>,
+  },
+  {
+    path: "/usestate",
+    element: <UseState/>,
+  },
+]);
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main>
+        <RouterProvider router={router} />
+      </main>
     </div>
   );
 }
