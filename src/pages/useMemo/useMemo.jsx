@@ -31,6 +31,9 @@ export default function UseMemo() {
         <div>
             <NavBar />
             <h1>useMemo</h1>
+            <p style={{ maxWidth: '800px', margin: 'auto', marginBottom: '30px' }}>На странице размещено два инпута. Второй инпут замемоизирован с помощью хука
+                useMemo благодаря чему функция срабатывает только при изменении зависимостей
+            </p>
             <hr></hr>
             <p>При вводе данных в первом инпуте выведется update1</p>
             <p>При вводе данных во втором инпуте выведется update1 и update2</p>
