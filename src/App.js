@@ -9,6 +9,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import UseRef from './pages/useRef/useRef';
+import ReduxToolkit from './pages/reduxToolkit/reduxToolkit';
+import { Provider } from "react-redux"; 
+import { store } from './toolkit/state/state';
+
 
 const router = createBrowserRouter([
   {
@@ -27,6 +31,9 @@ const router = createBrowserRouter([
     path: "/usestate",
     element: <UseState/>,
   },  {
+    path: "/toolkit",
+    element: <ReduxToolkit/>,
+  }, {
     path: "/usecallback",
     element: <UseCallback/>,
   },  {
@@ -36,11 +43,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
-      <main>
-        <RouterProvider router={router} />
-      </main>
-    </div>
+    <Provider store={store}> 
+      <div className="App">
+        <main>
+          <RouterProvider router={router} />
+        </main>
+      </div>
+    </Provider>
   );
 }
 

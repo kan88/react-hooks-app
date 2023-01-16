@@ -12,6 +12,7 @@ export default function NavBar() {
                 <Link className={classes.nav__item} to={`/usememo`}>useMemo</Link>
                 <Link className={classes.nav__item} to={`/usecallback`}>useCallback</Link>
                 <Link className={classes.nav__item} to={`/useref`}>useRef</Link>
+                <Link className={classes.nav__item} to={`/toolkit`}>reduxToolkit</Link>
             </li>
         </ul>
     )
