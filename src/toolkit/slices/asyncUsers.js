@@ -2,54 +2,86 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getUsers = createAsyncThunk(
-  "asyncUsersSlice/getUsers",
-  async () => {
-    const res = await axios.get("https://jsonplaceholder.typicode.com/users/");
-    return res.data;
+  "asyncusers/getUsers",
+  //первый параметр то что мы передали, второй параметр опциональный, можно достать сразу метод dispatch, getState...
+  async (_, {rejectWithValue }) => {
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/users/");
+      if (res.status !== 200) {
+        throw new Error()
+      }
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "asyncusers/deleteUser",
+  //первый параметр то что мы передали, второй параметр опциональный, можно достать сразу метод dispatch, getState...
+  async (id, {rejectWithValue, dispatch}) => {
+    try {
+      const res = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+      if (res.status !== 200) {
+        throw new Error('Can not delete')
+      }
+      dispatch(showOkConsole())
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
   }
 );
 
 export const getUser = createAsyncThunk(
-  "asyncUsersSlice/getUser",
+  "asyncusers/getUser",
   async (id) => {
     const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
     return res.data;
   }
 );
 
+const setErrorStatus = (state, action) => {
+  state.status = 'rejected';
+  state.error = action.payload
+}
+
 // Обрабатываем операции в редукторах
 const asyncUsersSlice = createSlice({
-  name: "users",
+  name: "asyncusers",
   initialState: {
-    status: false,
+    status: null,
     users: [],
     user: [],
-    failedMessage: "",
+    error: null,
+    console: 'Console log'
   },
   reducers: {
-    showUsers(state, action) {
-      console.log(state, action)
+    showUsers(state) {
+      console.log(state)
+    },
+    showOkConsole() {
+      console.log('delete')
     }
   },
-  extraReducers: {
-    [getUsers.pending]: (state, action) => {
-      state.status = true;
-    },
-    [getUsers.fulfilled]: (state, action) => {
+  extraReducers: (builder) => {
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder
+    .addCase(getUsers.pending, (state) => {
+      // Add user to the state array
+      state.status = 'loading';
+      state.error = null
+    })
+    .addCase(getUsers.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.status = 'resolved';
       state.users.push(action.payload);
-      state.status = false;
-    },
-    [getUser.fulfilled]: (state, action) => {
-      state.user.push(action.payload);
-      state.status = false;
-    },
-    [getUsers.rejected]: (state, action) => {
-      state.jobsLoading = false;
-      state.failedMessage = action.payload
-    },
+    })
+    .addCase(getUsers.rejected, setErrorStatus)
+    .addCase(deleteUser.rejected, setErrorStatus)
   },
 });
 
 const { actions, reducer } = asyncUsersSlice;
-export const { showUsers } = actions;
+export const { showUsers, showOkConsole } = actions;
 export const asyncUsersReducer = reducer
