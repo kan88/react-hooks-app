@@ -12,6 +12,7 @@ import UseRef from './pages/useRef/useRef';
 import ReduxToolkit from './pages/reduxToolkit/reduxToolkit';
 import { Provider } from "react-redux"; 
 import { store } from './toolkit/state/state';
+import CreateAsyncThunk from './pages/createAsyncThunk/createAsyncThunk';
 
 
 const router = createBrowserRouter([
@@ -36,7 +37,10 @@ const router = createBrowserRouter([
   }, {
     path: "/usecallback",
     element: <UseCallback/>,
-  },  {
+  }, {
+    path: "/createasyncthunk",
+    element: <CreateAsyncThunk/>,
+  }, {
     path: "/useref",
     element: <UseRef/>,
   },]);

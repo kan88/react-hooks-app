@@ -20,6 +20,8 @@ const postsSlice = createSlice({
       },
     },
 })
+
+console.log(postsSlice)
 const { actions, reducer } = postsSlice;
 export const { createPost, updatePost, deletePost } = actions;
 export const postReducer = reducer
